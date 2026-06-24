@@ -1,41 +1,72 @@
+let secretNumber = Math.floor(Math.random() * 1000) + 1;
+let title = document.getElementById('title');
+let p = document.getElementById('text');
+let input = document.querySelector('input');
+let counter = 1;
+
 start_button.onclick = () => {
 
-    alert("Numbers Game!")
+    console.log("GAME STARTED\n\nTry a number")
+    console.log(`The secret number is ${secretNumber}\n\n`)
 
-    const secretNum = Math.floor(Math.random() * 1000) + 1;
-    let counter = 0;
+    start_button.style.display = "none";
+    guess_button.style.display = "block";
 
-    while (true) {
+    title.innerHTML = "Game Started"
+    input.style.display = 'block';
+    p.innerHTML = "Insert a number bellow";
 
-        counter++;
+}
 
-        let number = prompt("Choose a number between 1 and 1000: ");
+guess_button.onclick = () => {
 
-        if (number == null) {
-            alert("Game canceled!")
-            console.log("Game canceled: Nothing inserted on then input!");
-            break
+    let num = parseInt(input.value);
+
+    console.log(`Attemp: ${counter} Number: ${num}`)
+
+    if (num == secretNumber) {
+        console.log("You discovered the Secret Number! Congrats!");
+        title.innerHTML = "You won!";
+        p.innerHTML = `Attemps: ${counter}`;
+        guess_button.style.display = 'none';
+        restart_button.style.display = 'block';
+    }
+
+    else {
+
+        if (num < secretNumber) {
+            p.innerHTML = `The secret number is bigger than ${num}`;
+            counter++;
         }
 
         else {
-
-            console.log(`The choosen number is ${number}!`)
-
-            if (number == secretNum) {
-                alert(`Congrats! You won! Attempt: ${counter}`);
-                console.log(`\n\nThe secret number was ${secretNum}`);
-                console.log("Game finished!")
-                break;
-
-            } else {
-
-                if (number < secretNum) {
-                    alert(`The secret number is greater than ${number}`);
-                }
-                else {
-                    alert(`The secret number is less than ${number}`);
-                }
-            }
+            p.innerHTML = `The secret number is less than ${num}`;
+            counter++;
         }
+
+        input.value = "";
+        input.focus();
     }
 }
+
+restart_button.onclick = () => {
+
+    console.clear();
+
+    secretNumber = Math.floor(Math.random() * 1000) + 1;
+
+    console.log("GAME STARTED\n\nTry a number")
+    console.log(`The secret number is ${secretNumber}\n\n`)
+
+    title.innerHTML = "Game Started";
+    p.innerHTML = "Insert a number bellow";
+
+    input.value = "";
+    input.focus();
+
+    counter = 1;
+
+    restart_button.style.display = 'none';
+    guess_button.style.display = 'block';
+}
+
